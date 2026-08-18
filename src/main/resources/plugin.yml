@@ -1,0 +1,59 @@
+name: EZPortalRedirect
+version: ${project.version}
+main: dev.myztic_dev.ezportalredirect.EZPortalRedirect
+api-version: "1.13"
+author: myztic_dev
+description: Redirects End portals, Nether portals, and Ender pearls using configurable world links
+website: https://github.com/myzticdev/EzPortalRedirect
+depend: []
+softdepend: []
+
+commands:
+  portal:
+    description: Main portal redirection command
+    usage: |
+      /portal toggle <portal-type> - Enable/disable portal interception
+      /portal set <portal-type> <world> <x> <y> <z> - Set destination for portal type
+      /portal link <portal-type> <sourceWorld> <destWorld> - Create a world link
+      /portal unlink <portal-type> <sourceWorld> - Remove a world link
+      /portal coords <world> <x> <y> <z> - Set a world's arrival coordinates
+      /portal reload - Reload configuration
+      /portal status - Show current status and destinations
+      /portal enable - Enable the plugin
+      /portal disable - Disable the plugin
+    permission: portal.admin
+    aliases: [portals, pr, ezportal]
+
+permissions:
+  portal.admin:
+    description: Access to all portal commands
+    default: op
+    children:
+      portal.toggle: true
+      portal.set: true
+      portal.reload: true
+      portal.status: true
+      portal.enable: true
+      portal.disable: true
+      ezportalredirect.bypass: true
+  portal.toggle:
+    description: Toggle portal interception for portal types
+    default: op
+  portal.set:
+    description: Set portal destinations
+    default: op
+  portal.reload:
+    description: Reload plugin configuration
+    default: op
+  portal.status:
+    description: View portal status and destinations
+    default: op
+  portal.enable:
+    description: Enable the plugin
+    default: op
+  portal.disable:
+    description: Disable the plugin
+    default: op
+  ezportalredirect.bypass:
+    description: Bypass world-specific portal and Ender Pearl blocks
+    default: op

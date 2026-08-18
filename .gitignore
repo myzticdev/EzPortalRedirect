@@ -1,0 +1,22 @@
+# Maven build output
+/target/
+
+# IDE and editor state
+/.idea/
+/.vscode/
+*.iml
+*.class
+
+# Local server and test runtime files
+*.log
+*.lck
+eula.txt
+logs/
+crash-reports/
+world/
+world_nether/
+world_the_end/
+
+# Operating system files
+.DS_Store
+Thumbs.db

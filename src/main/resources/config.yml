@@ -1,0 +1,70 @@
+# Master switch for all redirection.
+enabled: true
+
+# Supports legacy & color codes. Set to an empty string to disable the message.
+teleport-message: '&aYou have been teleported to a custom location!'
+
+# Message shown when a teleport is blocked. Available: %type% and %world%.
+# Set to an empty string to disable the message.
+blocked-message: '&cYou cannot use %type% in %world%!'
+safety-checks: true
+debug-mode: false
+
+# A type only redirects when it is enabled here and the source world has a link.
+intercept:
+  end-portals: false
+  nether-portals: false
+  ender-pearls: false
+
+# Prevent specific teleport types from being used in selected source worlds.
+# Add world names below a type as shown in the comments. An empty [] blocks none.
+# Players with ezportalredirect.bypass ignore these lists.
+blocked-teleports:
+  # Example:
+  # end-portals:
+  #   - lobby
+  #   - prison
+  end-portals: []
+
+  # Example:
+  # nether-portals:
+  #   - creative
+  nether-portals: []
+
+  # Example:
+  # ender-pearls:
+  #   - lobby
+  #   - spawn
+  ender-pearls: []
+
+# Directional source-world -> destination-world mappings.
+# The left side is the world players leave; the right side is where they arrive.
+# Replace an empty {} line with entries like the commented examples below.
+portal-links:
+  # Example:
+  # end-portals:
+  #   world: custom_end
+  #   custom_end: world
+  end-portals: {}
+
+  # Example:
+  # nether-portals:
+  #   world: custom_nether
+  #   custom_nether: world
+  nether-portals: {}
+
+  # Example:
+  # ender-pearls:
+  #   lobby: minigames
+  ender-pearls: {}
+
+# Optional arrival locations. A destination without an entry uses world spawn.
+# Replace `coordinates: {}` with the commented structure below when needed.
+# coordinates:
+#   custom_end:
+#     x: 100
+#     y: 70
+#     z: 200
+#     yaw: 180.0
+#     pitch: 0.0
+coordinates: {}

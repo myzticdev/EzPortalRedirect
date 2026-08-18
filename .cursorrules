@@ -1,0 +1,184 @@
+# Minecraft Plugin Development Rules for Cursor AI
+# Developer: myztic_dev
+# Target: Minecraft 1.21.4 with broad version compatibility
+
+## Core Development Guidelines
+
+### Plugin Structure & Standards
+- Always use Maven or Gradle build systems (prefer Maven for simplicity)
+- Follow standard Maven directory structure: src/main/java, src/main/resources
+- Use semantic versioning (MAJOR.MINOR.PATCH) for plugin versions
+- Include proper plugin.yml with all required fields
+- Always include a comprehensive README.md
+
+### Code Quality & Style
+- Use Java 21 language features when possible, but maintain compatibility
+- Follow Google Java Style Guide conventions
+- Use meaningful variable and method names (no single letters except loops)
+- Add comprehensive JavaDoc comments for public methods and classes
+- Implement proper error handling with try-catch blocks
+- Use logging instead of System.out.println (plugin.getLogger())
+
+### Minecraft Version Compatibility
+- Target Minecraft 1.21.4 as primary version
+- Use Paper/Spigot API features appropriately
+- Avoid version-specific code unless absolutely necessary
+- When version-specific code is needed, use reflection or version checks
+- Test compatibility with both Spigot and Paper servers
+
+### Performance Best Practices
+- Avoid sync operations on async threads and vice versa
+- Use Bukkit.getScheduler() for proper thread management
+- Implement efficient data structures (HashMap over ArrayList for lookups)
+- Cache frequently accessed data
+- Use bulk operations when possible (e.g., getOnlinePlayers())
+- Minimize database queries and use connection pooling
+
+### Security & Safety
+- Validate all user input and command arguments
+- Use parameterized queries for database operations
+- Implement proper permission checks using Bukkit permissions
+- Sanitize file paths to prevent directory traversal
+- Never trust client-side data without validation
+
+### API Integration
+- Use Bukkit/Spigot/Paper APIs appropriately
+- Implement proper event handling with @EventHandler
+- Use Bukkit configuration API for config files
+- Integrate with common plugins: Vault, PlaceholderAPI, WorldGuard when relevant
+- Check for soft dependencies before using them
+
+### Database & Storage
+- Use SQLite for simple storage, MySQL/PostgreSQL for complex needs
+- Always use HikariCP for connection pooling
+- Implement proper database schema versioning
+- Use async operations for all database queries
+- Provide data migration tools for version updates
+
+### Configuration Management
+- Use YAML configuration files (config.yml)
+- Implement configuration validation and default values
+- Support hot-reloading of configs when possible
+- Document all configuration options with comments
+- Use nested configurations for complex settings
+
+### Command System
+- Implement proper command executors and tab completers
+- Use CommandAPI or similar libraries for complex commands
+- Provide helpful error messages and usage information
+- Support both console and player command execution
+- Implement proper permission checks for all commands
+
+### Event Handling
+- Use appropriate event priorities (NORMAL by default)
+- Handle event cancellation properly
+- Unregister events in onDisable()
+- Use custom events for plugin-to-plugin communication
+- Implement proper event listener cleanup
+
+### Dependency Management
+- Shade dependencies into the plugin JAR when needed
+- Relocate shaded packages to avoid conflicts
+- Use provided scope for Bukkit/Spigot API
+- Minimize external dependencies
+- Always specify exact dependency versions
+
+### File Structure Template
+```
+plugin-name/
+├── src/main/java/dev/myztic_dev/pluginname/
+│   ├── PluginName.java (main class)
+│   ├── commands/
+│   ├── listeners/
+│   ├── managers/
+│   ├── utils/
+│   └── config/
+├── src/main/resources/
+│   ├── plugin.yml
+│   ├── config.yml
+│   └── messages.yml
+├── pom.xml or build.gradle
+└── README.md
+```
+
+### Plugin.yml Template
+```yaml
+name: PluginName
+version: ${project.version}
+main: dev.myztic_dev.pluginname.PluginName
+api-version: "1.21"
+author: myztic_dev
+description: Plugin description
+website: https://github.com/myzticdev/plugin-name
+depend: []
+softdepend: [Vault, PlaceholderAPI]
+commands:
+  plugincommand:
+    description: Main plugin command
+    usage: /<command>
+    permission: pluginname.use
+permissions:
+  pluginname.use:
+    description: Basic plugin usage
+    default: true
+  pluginname.admin:
+    description: Administrative permissions
+    default: op
+```
+
+### Main Class Template Requirements
+- Extend JavaPlugin
+- Override onEnable() and onDisable() methods
+- Initialize managers, listeners, and commands in onEnable()
+- Clean up resources in onDisable()
+- Implement proper shutdown handling
+- Include version compatibility checks
+
+### Error Handling Patterns
+- Always catch and log exceptions appropriately
+- Provide user-friendly error messages
+- Implement graceful degradation when features fail
+- Use plugin logger with appropriate log levels
+- Include stack traces in debug mode only
+
+### Testing Guidelines
+- Write unit tests for utility methods
+- Test with multiple Minecraft versions when possible
+- Test with both online and offline mode servers
+- Verify plugin works with minimal and maximum player counts
+- Test all permission scenarios
+
+### Documentation Requirements
+- Include installation instructions in README
+- Document all commands and permissions
+- Provide configuration examples
+- Include troubleshooting section
+- Document API usage for other developers
+
+### Deployment Considerations
+- Build fat JARs with all dependencies included
+- Test on clean server environments
+- Provide clear versioning and changelog
+- Include license information
+- Consider publishing to Maven repositories
+
+### Common Libraries to Consider
+- HikariCP for database connection pooling
+- Gson or Jackson for JSON handling
+- Adventure API for modern text components
+- ProtocolLib for packet manipulation (when needed)
+- CommandAPI for advanced command handling
+
+## Specific Instructions for Cursor AI
+
+When generating Minecraft plugin code:
+1. Always ask for clarification on plugin functionality before starting
+2. Include proper error handling and logging in all generated code
+3. Generate complete, working examples rather than code snippets
+4. Include relevant imports and package declarations
+5. Suggest appropriate Maven/Gradle dependencies
+6. Consider performance implications of generated code
+7. Include inline comments explaining complex logic
+8. Validate that generated code follows these guidelines
+9. Suggest testing approaches for the generated functionality
+10. Recommend relevant Bukkit/Spigot API methods and best practices
