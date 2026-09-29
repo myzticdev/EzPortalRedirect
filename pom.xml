@@ -6,7 +6,7 @@
 
     <groupId>dev.myztic_dev</groupId>
     <artifactId>ezportalredirect</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-alpha.1</version>
     <packaging>jar</packaging>
 
     <name>EZPortalRedirect</name>
@@ -104,7 +104,7 @@
                 <maven.compiler.release>25</maven.compiler.release>
                 <server.api.groupId>io.papermc.paper</server.api.groupId>
                 <server.api.artifactId>paper-api</server.api.artifactId>
-                <server.api.version>26.2.build.84-stable</server.api.version>
+                <server.api.version>26.3.build.49-alpha</server.api.version>
             </properties>
         </profile>
         <profile>
