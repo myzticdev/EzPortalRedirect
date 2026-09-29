@@ -10,7 +10,7 @@ $ErrorActionPreference = "Stop"
 $repositoryRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot ".."))
 $targetRoot = [System.IO.Path]::GetFullPath((Join-Path $repositoryRoot "target"))
 if ([string]::IsNullOrWhiteSpace($PluginJar)) {
-    $PluginJar = Join-Path $targetRoot "EZPortalRedirect-1.0.0.jar"
+    $PluginJar = Join-Path $targetRoot "EZPortalRedirect-1.0.1-alpha.1.jar"
 }
 $PluginJar = (Resolve-Path -LiteralPath $PluginJar).Path
 
@@ -44,18 +44,18 @@ try {
     foreach ($entry in $matrix) {
         $version = $entry.Version
         $javaExecutable = $entry.Java
-        $noGuiArgument = $entry.NoGuiArgument
+        $noGuiArgument = $entry.NoGuiArgument\n        $channel = $entry.Channel
         if (-not (Test-Path -LiteralPath $javaExecutable -PathType Leaf)) {
             throw "Java executable not found for Paper $version`: $javaExecutable"
         }
 
-        Write-Host "Resolving latest stable Paper $version build..."
+        Write-Host "Resolving latest $channel Paper $version build..."
         $builds = Invoke-RestMethod `
             -Headers $headers `
             -Uri "https://fill.papermc.io/v3/projects/paper/versions/$version/builds"
-        $build = $builds | Where-Object channel -eq "STABLE" | Select-Object -First 1
+        $build = $builds | Where-Object channel -eq $channel | Select-Object -First 1
         if ($null -eq $build) {
-            throw "Paper $version has no stable build in the downloads service."
+            throw "Paper $version has no $channel build in the downloads service."
         }
 
         $download = $build.downloads."server:default"
