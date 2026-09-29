@@ -10,16 +10,16 @@ development workflow used by this project.
 
 ## Compatibility
 
-- Target range: Bukkit-compatible Paper/Spigot servers from Minecraft 1.13.2 through current Paper 26.2
+- Target range: Bukkit-compatible Paper/Spigot servers from Minecraft 1.13.2 through current Paper 26.3 alpha
 - Release JAR bytecode: Java 8
 - Server Java: use the Java version required by your Paper release (Paper 1.20 through 1.21.11 uses Java 21; Paper 26.1+ uses Java 25)
 - No NMS, CraftBukkit internals, or version-specific server classes
 
-The build checks both ends of the supported API range: Spigot 1.13.2 for the release artifact and Paper 26.2 for current-API source compatibility. Runtime testing on a real server is still recommended before production deployment.
+The build checks both ends of the supported API range: Spigot 1.13.2 for the release artifact and Paper 26.3 alpha for current-API source compatibility. Runtime testing on a real server is still recommended before production deployment.
 
 ## Installation
 
-1. Build or download `EZPortalRedirect-1.0.0.jar`.
+1. Build or download `EZPortalRedirect-1.0.1-alpha.1.jar`.
 2. Put it in the server's `plugins` directory.
 3. Start the server once to create `plugins/EZPortalRedirect/config.yml`.
 4. Configure links with commands or edit the YAML file, then run `/portal reload`.
@@ -105,7 +105,7 @@ Build the distributable cross-version JAR:
 mvn clean package
 ```
 
-The output is `target/EZPortalRedirect-1.0.0.jar`.
+The output is `target/EZPortalRedirect-1.0.1-alpha.1.jar`.
 
 Compile and test against the current Paper API:
 
@@ -121,7 +121,7 @@ Run the automated MockBukkit integration suite:
 mvn -Pmockbukkit clean test
 ```
 
-On Windows, run real headless startup checks against Paper 1.13.2, 1.21.11, and 26.2 after building the release JAR:
+On Windows, run real headless startup checks against Paper 1.13.2, 1.21.11, and 26.3 alpha after building the release JAR:
 
 ```powershell
 .\scripts\Test-PaperMatrix.ps1
