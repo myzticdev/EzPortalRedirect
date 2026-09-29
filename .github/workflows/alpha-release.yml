@@ -1,0 +1,62 @@
+name: Alpha Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - pom.xml
+      - src/**
+      - .github/workflows/alpha-release.yml
+
+permissions:
+  contents: write
+
+jobs:
+  release-alpha:
+    if: contains(github.event.head_commit.message, 'Enable automated alpha prerelease') || contains(github.event.head_commit.message, 'Paper 26.3')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+
+      - name: Verify current Paper API compatibility
+        run: mvn -B -Ppaper-current clean test
+
+      - name: Build cross-version release JAR
+        run: mvn -B clean package
+
+      - name: Verify alpha version
+        id: version
+        shell: bash
+        run: |
+          VERSION="$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
+          if [[ "$VERSION" != *-alpha.* ]]; then
+            echo "Refusing to publish non-alpha version: $VERSION"
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Publish GitHub prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+          TAG: ${{ steps.version.outputs.tag }}
+        shell: bash
+        run: |
+          JAR="target/EZPortalRedirect-$VERSION.jar"
+          test -f "$JAR"
+          gh release create "$TAG" "$JAR" \
+            --target "$GITHUB_SHA" \
+            --prerelease \
+            --title "EZPortalRedirect $VERSION" \
+            --notes "Alpha test release for Paper 26.3 compatibility. Built against Paper API 26.3.build.49-alpha while retaining the Java 8 / Spigot 1.13.2 release compatibility floor. Please test portal redirection, blocking, spectator portal use, and Ender Pearl redirects before the stable release."
